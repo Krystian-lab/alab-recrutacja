@@ -36,9 +36,15 @@ return [
     */
 
     'guards' => [
+
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'patients',
+        ],
+
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'patients',
         ],
     ],
 
@@ -60,10 +66,11 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'patients' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+            'model' => App\Models\Patient::class,
+    ],
+
 
         // 'users' => [
         //     'driver' => 'database',
