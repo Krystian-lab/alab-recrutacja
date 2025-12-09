@@ -1,85 +1,124 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div class="app-shell">
+    <!-- TOP BAR -->
+    <header class="app-header">
+      <div class="app-header-inner">
+        <div class="app-header-left">
+          <img src="/src/assets/logo-lab.svg" alt="eLab" class="logo" />
+          <div class="brand-text">
+            <span class="brand-main">eLab laboratoria</span>
+            <span class="brand-sub">Panel Pacjenta</span>
+          </div>
+        </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+        <div class="app-header-right">
+          <button class="button-ghost" @click="goHome">
+            Strona główna
+          </button>
+        </div>
+      </div>
+    </header>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+    <!-- CONTENT -->
+    <main class="app-main">
+      <div class="app-container">
+        <router-view />
+      </div>
+    </main>
 
-  <RouterView />
+    <!-- FOOTER mini -->
+    <footer class="app-footer">
+      <div class="app-footer-inner">
+        <span>© {{ currentYear }} eLab laboratoria – wersja rekrutacyjna</span>
+        <span class="app-footer-links">Polityka prywatności · Bezpieczeństwo danych</span>
+      </div>
+    </footer>
+  </div>
 </template>
 
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const currentYear = new Date().getFullYear();
+
+function goHome() {
+  router.push({ name: "login" });
+}
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+.app-header {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.app-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  height: 32px;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.brand-text {
+  display: flex;
+  flex-direction: column;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.brand-main {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.brand-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-nav a:first-of-type {
-  border: 0;
+.app-footer {
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  background: rgba(255, 255, 255, 0.8);
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.app-footer-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.app-footer-links {
+  opacity: 0.85;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+@media (min-width: 768px) {
+  .app-footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 </style>
